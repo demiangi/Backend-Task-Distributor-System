@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EmpleadoDto;
 import com.example.demo.entity.Empleado;
 import com.example.demo.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,16 @@ public class EmpleadoController {
         this.empleadoService = empleadoService;
     }
 
+
     @GetMapping
-    public List<Empleado> obtenerTodosLosEmpleados() {
-        return empleadoService.obtenerTodos();
+    public List<EmpleadoDto> obtenerTodosLosEmpleados() {
+        try {
+            logger.info("Obteniendo todos los empleados");
+            return empleadoService.obtenerTodos();
+        }catch (Exception e){
+            logger.error("Error al obtener todos los empleados" +e.getMessage(),e);
+            throw e;
+        }
     }
 
     @PostMapping
